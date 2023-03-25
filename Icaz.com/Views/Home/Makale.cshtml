@@ -1,0 +1,50 @@
+﻿@model Icaz.com.Models.Makale
+
+@{
+    ViewData["Title"] = "View1";
+}
+
+
+
+<div>
+
+
+    <div class="row text-center">
+
+        <h1>@Html.DisplayFor(model => model.MakleAdi)</h1>
+        <br class="my-4" />
+        <h6>
+            @Html.DisplayFor(model => model.MakleOzet)
+        </h6>
+        <p class="text-start ">
+            @Html.DisplayFor(model => model.MakleMetni)
+        </p>
+        <div class="container ">
+            <div class="text-end ">
+                <span>Okunma Sayısı: @Html.DisplayFor(model => model.KacOkundu) </span>
+                @*<span>Puan:  @Html.DisplayFor(model => model.Puan)</span>*@
+            </div>
+            <hr />
+            <div class="row container  text-end p-0 m-0" >
+                <div class="col-3  ">
+                    <a class="btn btn-dark mb-4 p-3 " asp-action="Index">Back to List</a>
+                </div>
+                <div class=" col-9 p-0">
+                    <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.User.UserId"> @ViewBag.User </a></span> tarafından   </span>
+                    <span>Tarihinde yaratıldı: @Html.DisplayFor(model => model.CreateTime)</span>
+                    @if (Model.CreateTime < Model.EditTime)
+                    {
+                        <span>| Tarihinde yeniden düzetildi: @Html.DisplayFor(model => model.EditTime)</span>
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div>
+</div>

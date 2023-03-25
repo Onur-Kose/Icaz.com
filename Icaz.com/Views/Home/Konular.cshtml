@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Konu>
+
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            @{
+                foreach (var item in Model)
+                {
+                    <!-- Post preview-->
+                    <div class="post-preview container">
+                        
+                            <h3 class="post-title text-start">@item.KonuAdi</h3>
+                            <h4 class="post-subtitle text-end">@item.CreateTime</h4>
+                        
+                        <p class="post-meta">
+                            konu ile alakalı
+                            <a asp-action="Makaleler2" asp-route-id="@item.KonuId">Makaleler</a>
+                            
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                }
+
+            }
+
+
+        </div>
+    </div>
+</div>
