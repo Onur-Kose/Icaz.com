@@ -12,17 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icaz.com.Migrations
 {
     [DbContext(typeof(IcazContext))]
-    [Migration("20230324215837_v1")]
+    [Migration("20230325224611_v1")]
     partial class v1
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-preview.1.22076.6")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Icaz.com.Models.Konu", b =>
                 {
@@ -30,7 +31,7 @@ namespace Icaz.com.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KonuId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KonuId"));
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
@@ -39,12 +40,12 @@ namespace Icaz.com.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.HasKey("KonuId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Konus");
                 });
@@ -55,7 +56,7 @@ namespace Icaz.com.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MakaleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MakaleId"));
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
@@ -81,45 +82,28 @@ namespace Icaz.com.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Puan")
+                    b.Property<int?>("MemberId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Puan")
                         .HasColumnType("int");
 
                     b.HasKey("MakaleId");
 
                     b.HasIndex("KonuId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Makales");
                 });
 
-            modelBuilder.Entity("Icaz.com.Models.Rol", b =>
+            modelBuilder.Entity("Icaz.com.Models.Member", b =>
                 {
-                    b.Property<int>("RolId")
+                    b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolId"), 1L, 1);
-
-                    b.Property<string>("RolName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RolId");
-
-                    b.ToTable("Rols");
-                });
-
-            modelBuilder.Entity("Icaz.com.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberId"));
 
                     b.Property<string>("Ad")
                         .IsRequired()
@@ -161,22 +145,39 @@ namespace Icaz.com.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("MemberId");
 
                     b.HasIndex("RolId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("Icaz.com.Models.Rol", b =>
+                {
+                    b.Property<int>("RolId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolId"));
+
+                    b.Property<string>("RolName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RolId");
+
+                    b.ToTable("Rols");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Konu", b =>
                 {
-                    b.HasOne("Icaz.com.Models.User", "User")
+                    b.HasOne("Icaz.com.Models.Member", "Member")
                         .WithMany("Konular")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Makale", b =>
@@ -187,17 +188,17 @@ namespace Icaz.com.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Icaz.com.Models.User", "User")
+                    b.HasOne("Icaz.com.Models.Member", "Member")
                         .WithMany("Makaleler")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("MemberId");
 
-                    b.Navigation("User");
+                    b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("Icaz.com.Models.User", b =>
+            modelBuilder.Entity("Icaz.com.Models.Member", b =>
                 {
                     b.HasOne("Icaz.com.Models.Rol", "Rol")
-                        .WithMany("Users")
+                        .WithMany("Members")
                         .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -210,16 +211,16 @@ namespace Icaz.com.Migrations
                     b.Navigation("Makales");
                 });
 
-            modelBuilder.Entity("Icaz.com.Models.Rol", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Icaz.com.Models.User", b =>
+            modelBuilder.Entity("Icaz.com.Models.Member", b =>
                 {
                     b.Navigation("Konular");
 
                     b.Navigation("Makaleler");
+                });
+
+            modelBuilder.Entity("Icaz.com.Models.Rol", b =>
+                {
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

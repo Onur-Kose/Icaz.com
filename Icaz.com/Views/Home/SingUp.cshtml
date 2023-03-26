@@ -1,48 +1,56 @@
-﻿
-@model Icaz.com.Models.User
+﻿@model Icaz.com.Models.Member
 
 @{
     ViewData["Title"] = "SingUp";
+    
+}
+@{
+    if (TempData["Message"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+    }
 }
 
 <h1 class="m-2">SingUp</h1>
 
 
-<hr class="my-4"/>
+<hr class="my-4" />
 <div class="row">
     <div class="col-10 m-3">
-        <form class="m-2"  asp-action="SingUp">
+        <form class="m-2" asp-action="SingUp">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group ">
                 <label asp-for="Ad" class="control-label"></label>
-                <input asp-for="Ad" class="form-control" />
+                <input id="i" required asp-for="Ad" class="form-control" />
                 <span asp-validation-for="Ad" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Soyad" class="control-label"></label>
-                <input asp-for="Soyad" class="form-control" />
+                <input required asp-for="Soyad" class="form-control" />
                 <span asp-validation-for="Soyad" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cinsiyet" class="control-label"></label>
-                <input asp-for="Cinsiyet"  class="form-control"></input>
+                <input required asp-for="Cinsiyet" class="form-control"></input>
                 <span asp-validation-for="Cinsiyet" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
+                <input required asp-for="BirthDate" class="form-control" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Kullaniciadi" class="control-label"></label>
-                <input asp-for="Kullaniciadi" class="form-control" />
-                <span asp-validation-for="Kullaniciadi" class="text-danger"></span>
+                <label asp-for="UserName" class="control-label"></label>
+                <input required asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmailAdresi" class="control-label"></label>
-                <input asp-for="EmailAdresi" class="form-control" />
-                <span asp-validation-for="EmailAdresi" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input required id="inputEmail" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="KullaniciURL" class="control-label"></label>
@@ -51,9 +59,9 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Sifre" class="control-label"></label>
-                <input asp-for="Sifre" class="form-control" />
-                <span asp-validation-for="Sifre" class="text-danger"></span>
+                <label asp-for="PasswordHash" class="control-label"></label>
+                <input required id="inputPassword" asp-for="PasswordHash" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">

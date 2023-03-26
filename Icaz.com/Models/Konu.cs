@@ -13,9 +13,9 @@ namespace Icaz.com.Models
 
 
         //Bağlantılar
-        [ForeignKey("UserId")]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("MemberId")]
+        public string MemberId { get; set; }
+        public Member Member { get; set; }
         public List<Makale> Makales { get; set; }
     }
 }

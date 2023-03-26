@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Icaz.com.Models
 {
-    public class Rol
+    public class Rol :IdentityRole
     {
-        [Key]
-        public int RolId { get; set; }
-        public string RolName { get; set; }
 
-        public List<User> Users { get; set; }
     }
 }

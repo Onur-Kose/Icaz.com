@@ -6,6 +6,7 @@ namespace Icaz.com.Validation
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
+
             string Cinsiyet = value.ToString().ToLower();
 
 

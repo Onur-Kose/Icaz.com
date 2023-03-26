@@ -17,9 +17,9 @@ namespace Icaz.com.Models
 
         public virtual int KonuId { get; set; }
         //Bağlantılar
-        [ForeignKey("UserId")]
-        public int? UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("MemberId")]
+        public string? MemberId { get; set; }
+        public Member Member { get; set; }
 
         
     }

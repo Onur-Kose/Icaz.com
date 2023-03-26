@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Makale>
+@{
+    if (TempData["Message"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+}
+@{
+    if (TempData["Message1"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["Message1"]
+        </div>
+    }
+}
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            @{
+                foreach (Makale item in Model)
+                {
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a method="post" asp-controller="Home" asp-action="Makale" asp-route-id="@item.MakaleId">
+                            <!--TODOO-->
+                            <h2 class="post-title text-truncate col-11">@item.MakleAdi</h2>
+                            <h3 class="post-subtitle">@item.MakleOzet</h3>
+
+                        </a>
+                        <p class="font-monospace">
+                            Bu makaleyi <a class="text-success fw-bold" method="Post" asp-controller="User" asp-action="Makaleupdate" asp-route-id="@item.MakaleId">Düzenleyebilir</a> ve <a class="text-danger fw-bold" method="Post" asp-controller="User" asp-action="MakaleDelete" asp-route-id="@item.MakaleId">Silebilirsiniz</a>
+
+                      
+                        </p>
+
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                }
+
+
+            }
+
+            <a class="btn btn-dark" asp-action="Index">Back to List</a>
+            <hr class="my-4" />
+        </div>
+    </div>
+</div>

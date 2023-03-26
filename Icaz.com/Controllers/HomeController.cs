@@ -1,5 +1,7 @@
 ﻿using Icaz.com.Enums;
 using Icaz.com.Models;
+using Icaz.com.Models.View_Halper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -9,14 +11,21 @@ namespace Icaz.com.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<Member> _userManager;
+        private readonly RoleManager<Rol> _roleManager;
+        private readonly SignInManager<Member> _signInManager;
+
         private readonly ILogger<HomeController> _logger;
         private readonly IcazContext _db;
         //public HomeController(ILogger<HomeController> logger)
         //{
         //    _logger = logger;
         //}
-        public HomeController(IcazContext db)
+        public HomeController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager)
         {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _db = db;
         }
 
@@ -24,7 +33,7 @@ namespace Icaz.com.Controllers
         public IActionResult Index()
         {
             
-            var makaleler = _db.Makales.OrderBy(x => x.Puan).Take(5);
+            var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).Take(5);
             return View(makaleler);
         }
         public IActionResult About()
@@ -38,7 +47,7 @@ namespace Icaz.com.Controllers
             return View(makaleler);
         }
 
-        [Route("deneme")]
+        
         public IActionResult Makaleler2(int id)
         {
             var makaleler = _db.Makales.Where(c => c.KonuId == id).ToList();
@@ -48,7 +57,7 @@ namespace Icaz.com.Controllers
         {
            
             var makale = _db.Makales.Where(x => x.MakaleId == id).FirstOrDefault();
-            var User = _db.Users.Where(x => x.UserId == makale.UserId).FirstOrDefault();
+            var User = _db.Members.Where(x => x.Id == makale.MemberId).FirstOrDefault();
             
             makale.KacOkundu = makale.KacOkundu + 1;
             _db.SaveChanges();
@@ -62,9 +71,9 @@ namespace Icaz.com.Controllers
             var konular = _db.Konus.ToList();
             return View(konular);
         }
-        public IActionResult Yazar(int itemid)
+        public IActionResult Yazar(string itemid)
         {
-            var yazar = _db.Users.Where(x=>x.UserId == itemid).FirstOrDefault();
+            var yazar = _db.Members.Where(x => x.Id == itemid).FirstOrDefault();
             return View(yazar);
         }
         [HttpGet]
@@ -73,21 +82,35 @@ namespace Icaz.com.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SingUp(User newUser)
+        public async Task<IActionResult> SingUp(Member newUser)
         {
-            var deneme = _db.Users.Select(x => x).ToList();
-            foreach (var item in deneme)
-            {
-                if (item.EmailAdresi == newUser.EmailAdresi || item.Kullaniciadi == newUser.Kullaniciadi)
-                {
-                    return Ok("Birşeyler Ters Gitti");
-                }
-                          
-            }
-            _db.Add(newUser);
-            _db.SaveChanges();
-            return RedirectToAction("login", "Home");
+            var varMı = await _userManager.FindByEmailAsync(newUser.Email);
 
+            if (varMı == null)
+            {
+                Member identityUser = new Member();
+                identityUser.Email = newUser.Email;
+                identityUser.UserName = newUser.UserName;
+                IdentityResult result = await _userManager.CreateAsync(identityUser, newUser.PasswordHash);
+                if (result.Succeeded)
+                {
+                    var resultRole = await _userManager.AddToRoleAsync(identityUser, "USER");
+                    if (resultRole.Succeeded)
+                    {
+                        TempData["Message"] = "Kayıt Başarılı";
+                        return RedirectToAction("login", "Home");
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "Kayıt başarısız";
+                    return View();
+                }
+                
+            }
+
+            TempData["Message"] = "Zaten Kayıtlı Kullanıcı ";
+            return View();
         }
         [HttpGet]
         public IActionResult Login()
@@ -95,16 +118,32 @@ namespace Icaz.com.Controllers
 
             return View();
         }
-        //[HttpPost]
-        //public IActionResult Login(User gelenUser)
-        //{
-        //    var users = _db.Users.ToList();
-        //    foreach (var item in users)
-        //    {
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginUser gelenUser)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = "Giriş Modeli Doğru değil";
+                return View();
+            }
+            var userVarMi = await _userManager.FindByEmailAsync(gelenUser.Eposta);
+            if (userVarMi == null)
+            {
+                TempData["Message"] = "Kullanıcı bulunamadı";
+                return View();
+            }
+            var kayitliMi = await _signInManager.PasswordSignInAsync(userVarMi, gelenUser.Password,true,true);
+            if (kayitliMi.Succeeded)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            TempData["Message"] = "Şifre Hatalı !!";
 
-        //    }
-        //    return View();
-        //}
+
+
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

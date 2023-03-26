@@ -1,12 +1,99 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Icaz.com.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Icaz.com.Controllers
 {
+
+    [Authorize]
     public class UserController : Controller
     {
+        private readonly UserManager<Member> _userManager;
+        private readonly RoleManager<Rol> _roleManager;
+        private readonly SignInManager<Member> _signInManager;
+        private readonly IcazContext _db;
+
+        public UserController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _db = db;
+        }
         public IActionResult Index()
         {
-            return View();
+            var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).Take(5);
+            return RedirectToAction("Index", "Home");
         }
+        public IActionResult About()
+        {
+            
+            return RedirectToAction("About", "Home");
+        }
+
+        public async Task<IActionResult> PersonMakale()
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var personMakales = _db.Makales.Where(x => x.MemberId == identityUser.Id).ToList();
+
+            return View(personMakales);
+        }
+        [HttpGet]
+        public async Task<IActionResult> MakaleUpdate(int id)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var updateMakale = _db.Makales.Where(x => x.MakaleId == id).Where(x => x.MemberId == identityUser.Id).FirstOrDefault();
+
+            return View(updateMakale);
+        }
+        [HttpPost]
+        public async Task<IActionResult> MakaleUpdate(Makale updateMakale)
+        {
+            var bulunanMakale = _db.Makales.Where(x => x.MakaleId == updateMakale.MakaleId).FirstOrDefault();
+            bulunanMakale.MakleAdi = updateMakale.MakleAdi;
+            bulunanMakale.MakleOzet = updateMakale.MakleOzet;
+            bulunanMakale.MakleMetni = updateMakale.MakleMetni;
+            _db.Update(bulunanMakale);
+            _db.SaveChanges();
+
+
+            
+            return RedirectToAction("PersonMakale" ,"User");
+        }
+        [HttpGet]
+        public async Task<IActionResult> MakaleDelete(int id)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var deleteMakale = _db.Makales.Where(x => x.MakaleId == id).Where(x => x.MemberId == identityUser.Id).FirstOrDefault();
+
+            return View(deleteMakale);
+            
+        }
+        [HttpPost]
+        public async Task<IActionResult> MakaleDelete(Makale deleteMakale)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var bulunanMakale = _db.Makales.Where(x => x.MakaleId == deleteMakale.MakaleId).Where(x => x.MemberId == identityUser.Id).FirstOrDefault();
+            if (bulunanMakale != null)
+            {
+                _db.Remove(bulunanMakale);
+                _db.SaveChanges();
+                TempData["Message1"] = "İşlem Başarılı";
+                return RedirectToAction("PersonMakale", "User");
+            }
+            else
+            {
+                TempData["Message"] = "Bu işlem için gerekli yetkiye sahip değilsiniz";
+                return RedirectToAction("Login","home");
+            }
+            
+        }
+        public IActionResult MemeberUppdate()
+        {
+
+            return RedirectToAction("About", "Home");
+        }
+
     }
 }

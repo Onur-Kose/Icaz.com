@@ -30,11 +30,11 @@
                     <a class="btn btn-dark mb-4 p-3 " asp-action="Index">Back to List</a>
                 </div>
                 <div class=" col-9 p-0">
-                    <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.User.UserId"> @ViewBag.User </a></span> tarafından   </span>
+                    <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.Member.Id"> @ViewBag.User </a></span> tarafından   </span>
                     <span>Tarihinde yaratıldı: @Html.DisplayFor(model => model.CreateTime)</span>
                     @if (Model.CreateTime < Model.EditTime)
                     {
-                        <span>| Tarihinde yeniden düzetildi: @Html.DisplayFor(model => model.EditTime)</span>
+                        <span> ve En Son Tarihinde yeniden düzetildi: @Html.DisplayFor(model => model.EditTime)</span>
                     }
 
                 </div>

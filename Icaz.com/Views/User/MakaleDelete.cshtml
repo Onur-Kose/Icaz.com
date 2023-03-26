@@ -1,0 +1,60 @@
+﻿@model Icaz.com.Models.Makale
+
+@{
+    ViewData["Title"] = "MakaleDelete";
+}
+
+
+
+<h class="alert alert-danger" role="alert">Bu işlem geri alınamaz Tüm yazdıkların silinecek emin misin</h>
+<br />
+<br />
+<hr />
+<div>
+    <h4>@Html.DisplayFor(model => model.MakleAdi)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Makele Özeti
+        </dt>
+        <dd class="col-sm-10 text-truncate">
+
+            @Html.DisplayFor(model => model.MakleOzet)
+        </dd>
+        <hr />
+        <dt class="col-sm-2">
+            Makale Metni
+        </dt>
+        <dd class="col-sm-10" >
+            
+               @Html.DisplayFor(model => model.MakleMetni); 
+             
+        </dd>
+        <dt class="col-sm-2">
+            Görüntülenme Sayısı
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KacOkundu)
+        </dd>
+        <dt class="col-sm-2">
+            Oluşturulma Tarihi
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+        <dt class="col-sm-2">
+            Son Düzenleme Tarihi
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EditTime)
+        </dd>
+    </dl>
+
+    <form class="row justify-content-around" asp-action="MakaleDelete">
+        
+        <input type="hidden" asp-for="MakaleId" />
+        <input type="submit" value="Delete" class="btn btn-danger col-3" /> 
+        <a class="btn btn-dark col-3" asp-controller="User" asp-action="PersonMakale">Makalelerime Dön</a>
+    </form>
+    <br />
+</div>

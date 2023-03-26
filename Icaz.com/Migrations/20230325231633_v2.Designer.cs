@@ -4,6 +4,7 @@ using Icaz.com.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icaz.com.Migrations
 {
     [DbContext(typeof(IcazContext))]
-    partial class IcazContextModelSnapshot : ModelSnapshot
+    [Migration("20230325231633_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace Icaz.com.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Konus", (string)null);
+                    b.ToTable("Konus");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Makale", b =>
@@ -92,7 +95,7 @@ namespace Icaz.com.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Makales", (string)null);
+                    b.ToTable("Makales");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

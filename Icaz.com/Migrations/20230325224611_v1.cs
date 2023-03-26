@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Icaz.com.Migrations
 {
+    /// <inheritdoc />
     public partial class v1 : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -23,10 +25,10 @@ namespace Icaz.com.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Members",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    MemberId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Soyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -42,9 +44,9 @@ namespace Icaz.com.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Members", x => x.MemberId);
                     table.ForeignKey(
-                        name: "FK_Users_Rols_RolId",
+                        name: "FK_Members_Rols_RolId",
                         column: x => x.RolId,
                         principalTable: "Rols",
                         principalColumn: "RolId",
@@ -59,16 +61,16 @@ namespace Icaz.com.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KonuAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    MemberId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Konus", x => x.KonuId);
                     table.ForeignKey(
-                        name: "FK_Konus_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_Konus_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "MemberId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -86,7 +88,7 @@ namespace Icaz.com.Migrations
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     KonuId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    MemberId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,16 +100,16 @@ namespace Icaz.com.Migrations
                         principalColumn: "KonuId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Makales_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
+                        name: "FK_Makales_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "MemberId");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Konus_UserId",
+                name: "IX_Konus_MemberId",
                 table: "Konus",
-                column: "UserId");
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Makales_KonuId",
@@ -115,16 +117,17 @@ namespace Icaz.com.Migrations
                 column: "KonuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Makales_UserId",
+                name: "IX_Makales_MemberId",
                 table: "Makales",
-                column: "UserId");
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RolId",
-                table: "Users",
+                name: "IX_Members_RolId",
+                table: "Members",
                 column: "RolId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -134,7 +137,7 @@ namespace Icaz.com.Migrations
                 name: "Konus");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "Rols");

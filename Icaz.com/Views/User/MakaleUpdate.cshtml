@@ -1,0 +1,47 @@
+﻿@model Icaz.com.Models.Makale
+
+@{
+    ViewData["Title"] = "MakaleUpdate";
+}
+
+
+
+<h3 class="m-2 ">Makale Düzenleme İşlemleri</h3>
+<hr />
+<div class="row m-2">
+    <div class="col-11">
+        <form asp-action="MakaleUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MakaleId" />
+            <div class="form-group col-3">
+                <label asp-for="MakleAdi" class="control-label">Makale Adı</label>
+                <input asp-for="MakleAdi" class="form-control" />
+                <span asp-validation-for="MakleAdi" class="text-danger"></span>
+            </div>
+            <br />  
+            <div class="form-group">
+                <label asp-for="MakleOzet" class="control-label">Makale Özeti</label>
+                <textarea rows="6" asp-for="MakleOzet" class="form-control" ></textarea>
+                <span asp-validation-for="MakleOzet" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="MakleMetni" class="control-label">Makaleniz</label>
+                <textarea rows="20" asp-for="MakleMetni" class="form-control "></textarea>
+                <span asp-validation-for="MakleMetni" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group text-end ">
+                <input type="submit" value="   Kaydet   " class="btn btn-primary" />
+            </div>
+
+        </form>
+        <br />
+        <div>
+            <a class="btn btn-dark m-3" asp-controller="User" asp-action="PersonMakale">Bir Önceki Sayfaya Dön </a>
+        </div>
+    </div>
+</div>
+
+
+

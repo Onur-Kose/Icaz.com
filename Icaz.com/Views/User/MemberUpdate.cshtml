@@ -1,0 +1,30 @@
+﻿@model Icaz.com.Models.Member
+@{
+    ViewData["Title"] = "MemberUpdate";
+}
+
+<h3 class="m-2 ">Üyelik Bilgileri Güncelleme Sayfası</h3>
+
+<hr />
+<div class="row m-2">
+    <div class="col-11">
+        <form asp-action="MemberUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group col-3">
+                <label asp-for="UserName" class="control-label">Kullanıcı Adı</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group col-3">
+                <label asp-for="Ad" class="control-label">Adınınz</label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+
+
+        </form>
+    </div>
+</div>
