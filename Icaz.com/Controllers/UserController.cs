@@ -105,7 +105,6 @@ namespace Icaz.com.Controllers
         public async Task<IActionResult> MakaleCreate(Makale makale)
         {
             KonularıListele();
-            //makale.KonuId = ViewBag.KonuId;
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
             makale.MemberId = identityUser.Id;
             makale.KacOkundu = 0;

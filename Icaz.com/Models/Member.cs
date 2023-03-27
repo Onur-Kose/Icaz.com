@@ -27,6 +27,8 @@ namespace Icaz.com.Models
         public string KullaniciURL { get; set; }
         public bool DeleteUser { get; set; } = false;
 
+        public string MemberDetail { get; set; }
+        public string Fotograf { get; set; }
 
         public List<Konu> Konular { get; set; }
         public List<Makale> Makaleler { get; set; }
