@@ -42,6 +42,7 @@ namespace Icaz.com.Controllers
         [HttpGet]
         public async Task<IActionResult> MakaleUpdate(int id)
         {
+            KonularıListele();
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
             var updateMakale = _db.Makales.Where(x => x.MakaleId == id).Where(x => x.MemberId == identityUser.Id).FirstOrDefault();
 
@@ -50,6 +51,7 @@ namespace Icaz.com.Controllers
         [HttpPost]
         public async Task<IActionResult> MakaleUpdate(Makale updateMakale)
         {
+            KonularıListele();
             var bulunanMakale = _db.Makales.Where(x => x.MakaleId == updateMakale.MakaleId).FirstOrDefault();
             bulunanMakale.MakleAdi = updateMakale.MakleAdi;
             bulunanMakale.MakleOzet = updateMakale.MakleOzet;
@@ -89,10 +91,73 @@ namespace Icaz.com.Controllers
             }
             
         }
-        public IActionResult MemeberUppdate()
+        [HttpGet]
+        public IActionResult MakaleCreate()
         {
+            KonularıListele();
 
-            return RedirectToAction("About", "Home");
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> MakaleCreate(Makale makale)
+        {
+            KonularıListele();
+            //makale.KonuId = ViewBag.KonuId;
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            makale.MemberId = identityUser.Id;
+            makale.KacOkundu = 0;
+            _db.Add(makale);
+            _db.SaveChanges();
+
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> MemberUpdate()
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            return View(identityUser);
+        }
+        [HttpPost]
+        public async Task<IActionResult> MemberUpdate(Member member)
+        {
+            
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            identityUser.Ad = member.Ad;
+            identityUser.Soyad = member.Soyad;
+            identityUser.Cinsiyet = member.Cinsiyet;
+            identityUser.BirthDate = member.BirthDate;
+            identityUser.UserName = member.UserName;
+            identityUser.Email = member.Email;
+            identityUser.KullaniciURL = member.KullaniciURL;
+            identityUser.PhoneNumber = member.PhoneNumber;
+            IdentityResult result = await _userManager.UpdateAsync(identityUser);
+            if (result.Succeeded)
+            {
+                TempData["Message"] = "Kayıt Başarılı";
+                return View();
+            }
+            else
+            {
+                TempData["Message1"] = "Kayıt Başarısız";
+                return View();
+            }
+                
+        }
+        public async Task<IActionResult> LogOut()
+        {
+            _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login" , "home");
+        }
+
+        private void KonularıListele()
+        {
+            var konular = _db.Konus.ToList();
+            ViewBag.Konular = konular;
         }
 
     }

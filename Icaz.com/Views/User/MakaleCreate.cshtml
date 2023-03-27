@@ -1,38 +1,31 @@
 ﻿@model Icaz.com.Models.Makale
 
 @{
-    ViewData["Title"] = "MakaleUpdate";
+    ViewData["Title"] = "MakaleCreate";
 }
 
 
 
-<h3 class="m-2 ">Makale Düzenleme İşlemleri</h3>
+<h4 class="m-4">Makale</h4>
 <hr />
-<div class="row m-2">
-    <div class="col-11">
-        <form asp-action="MakaleUpdate">
+<div class="row justify-content-center">
+    <div class="col-md-11 m-3">
+        <form asp-action="MakaleCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MakaleId" />
-            <div class="form-group col-3">
+            <div class="form-group col-4">
                 <label asp-for="MakleAdi" class="control-label">Makale Adı</label>
                 <input asp-for="MakleAdi" class="form-control" />
                 <span asp-validation-for="MakleAdi" class="text-danger"></span>
             </div>
-            <br />  
             <div class="form-group">
                 <label asp-for="MakleOzet" class="control-label">Makale Özeti</label>
-                <textarea rows="6" asp-for="MakleOzet" class="form-control" ></textarea>
+                <textarea rows="2" asp-for="MakleOzet" class="form-control "></textarea>
                 <span asp-validation-for="MakleOzet" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
-                <label asp-for="MakleMetni" class="control-label">Makaleniz</label>
-                <textarea rows="20" asp-for="MakleMetni" class="form-control "></textarea>
+                <label asp-for="MakleMetni" class="control-label">Makale Metini</label>
+                <textarea rows="7" asp-for="MakleMetni" class="form-control"></textarea>
                 <span asp-validation-for="MakleMetni" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group text-end ">
-                <input type="submit" value="   Kaydet   " class="btn btn-primary" />
             </div>
             <div class="form-group col-4">
                 <label asp-for="KonuId" class="control-label">Makale Konusu</label>
@@ -43,13 +36,18 @@
                     }
                 </select>
             </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary " />
+                <a class="btn btn-dark m-3" asp-controller="User" asp-action="Index">Home Sayfasına Dön</a>
+            </div>
         </form>
-        <br />
-        <div>
-            <a class="btn btn-dark m-3" asp-controller="User" asp-action="PersonMakale">Bir Önceki Sayfaya Dön </a>
-        </div>
+        
+            
+        
     </div>
 </div>
+
 
 
 

@@ -8,6 +8,7 @@ namespace Icaz.com.Models
         [Key]
         public int KonuId { get; set; }
         public string KonuAdi { get; set; }
+        [DataType(DataType.Date)]
         public DateTime CreateTime { get; set; }
 
 

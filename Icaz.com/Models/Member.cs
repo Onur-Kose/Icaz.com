@@ -10,7 +10,7 @@ namespace Icaz.com.Models
     {
         public Member()
         {
-            Guid elma = new Guid();
+            string elma = Guid.NewGuid().ToString();
             KullaniciURL =  Ad + Soyad + elma ;
         }
 
@@ -21,7 +21,8 @@ namespace Icaz.com.Models
         [Birthdate_Validation]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-        public DateTime JoinDate { get; set; } = DateTime.Now;
+        [DataType(DataType.Date)]
+        public DateTime JoinDate { get; set; } = DateTime.Now.Date;
         
         public string KullaniciURL { get; set; }
         public bool DeleteUser { get; set; } = false;

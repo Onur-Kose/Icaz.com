@@ -8,11 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>@ViewData["Title"] - Icaz.com</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!--İkon paketleri-->
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="~/css/styles.css" rel="stylesheet" />
     </head>
@@ -20,20 +23,23 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">İCAR</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index" >İCAZ</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="about">Hakkımızda</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Konular">Konular</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="User" asp-action="PersonMakale">Makalelerim</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="User" asp-action="Makale Yaz">Makale Yaz</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index">Home  <sapn class="fas fa-house-user fs-6"></sapn></a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="about">Hakkımızda   <sapn class="fas fa-ghost fs-6"></sapn></a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Konular">Konular   <sapn class="fas fa-folder-open fs-6"></sapn></a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="User" asp-action="PersonMakale">Makalelerim  <sapn class="fas fa-book fs-6"></sapn></a></li>
 
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 " asp-controller="User" asp-action="MemberUpdate">Profil <span class="fas fa-user-circle fs-6"></span></a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="User" asp-action="MakaleCreate">Makale Yaz   <sapn class="far fa-edit fs-6"></sapn></a></li>
+
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 " asp-controller="User" asp-action="MemberUpdate">Profil   <span class="fas fa-user-circle fs-6"></span></a></li>
+
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 " asp-controller="User" asp-action="LogOut">Çıkış Yap   <span class="fas fa-skull-crossbones fs-6"></span></a></li>
 
                     </ul>
                 </div>
@@ -62,16 +68,16 @@
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
                                 <a href="https://chrome://dino">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa fa-gamepad fa-stack-1x fa-inverse"></i>
+                                    <span class="fa-stack fa-lg fs-4">
+                                        <i class="fas fa-circle fa-stack-2x fs-4"></i>
+                                        <i class="fab fa fa-gamepad fa-stack-1x fa-inverse "></i>
                                     </span>
                                 </a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="https://www.linkedin.com/in/onur-/">
                                     <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-circle fa-stack-2x fs-4"></i>
                                         <i class="fab fa-linkedin fa-stack-1x fa-inverse" src="https://www.linkedin.com/in/onur-/"></i>
                                     </span>
                                 </a>
@@ -79,7 +85,7 @@
                             <li class="list-inline-item">
                                 <a href="https://github.com/Onur-Kose">
                                     <span class="fa-stack fa-lg" href="https://www.linkedin.com/in/onur-/">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fas fa-circle fa-stack-2x fs-4"></i>
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
@@ -120,7 +126,7 @@ else
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">İCAR</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">İCAZ</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>

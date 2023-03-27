@@ -91,6 +91,11 @@ namespace Icaz.com.Controllers
                 Member identityUser = new Member();
                 identityUser.Email = newUser.Email;
                 identityUser.UserName = newUser.UserName;
+                identityUser.Cinsiyet = newUser.Cinsiyet;
+                identityUser.BirthDate = newUser.BirthDate;
+                identityUser.KullaniciURL = newUser.KullaniciURL;
+                identityUser.PasswordHash = newUser.PasswordHash;
+
                 IdentityResult result = await _userManager.CreateAsync(identityUser, newUser.PasswordHash);
                 if (result.Succeeded)
                 {
