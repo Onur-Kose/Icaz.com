@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Icaz.com.Controllers
 {
@@ -28,7 +29,7 @@ namespace Icaz.com.Controllers
         }
         public IActionResult About()
         {
-            
+
             return RedirectToAction("About", "Home");
         }
 
@@ -60,8 +61,8 @@ namespace Icaz.com.Controllers
             _db.SaveChanges();
 
 
-            
-            return RedirectToAction("PersonMakale" ,"User");
+
+            return RedirectToAction("PersonMakale", "User");
         }
         [HttpGet]
         public async Task<IActionResult> MakaleDelete(int id)
@@ -70,7 +71,7 @@ namespace Icaz.com.Controllers
             var deleteMakale = _db.Makales.Where(x => x.MakaleId == id).Where(x => x.MemberId == identityUser.Id).FirstOrDefault();
 
             return View(deleteMakale);
-            
+
         }
         [HttpPost]
         public async Task<IActionResult> MakaleDelete(Makale deleteMakale)
@@ -81,15 +82,15 @@ namespace Icaz.com.Controllers
             {
                 _db.Remove(bulunanMakale);
                 _db.SaveChanges();
-                TempData["Message1"] = "İşlem Başarılı";
+                TempData["Message1"] = "İşlem Başarılı,\n\r\n Biliyormuydun sildiğin herşeyi gerçekten veri tabanlarımızdan temizliyoruz";
                 return RedirectToAction("PersonMakale", "User");
             }
             else
             {
                 TempData["Message"] = "Bu işlem için gerekli yetkiye sahip değilsiniz";
-                return RedirectToAction("Login","home");
+                return RedirectToAction("Login", "home");
             }
-            
+
         }
         [HttpGet]
         public IActionResult MakaleCreate()
@@ -108,6 +109,20 @@ namespace Icaz.com.Controllers
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
             makale.MemberId = identityUser.Id;
             makale.KacOkundu = 0;
+            List<Makale> konrtol = _db.Makales.Where(x => x.MakleMetni == makale.MakleMetni).ToList();
+            if (konrtol.Count >= 1)
+            {
+                TempData["Message"] = "Bu makale daha önce yazılmış gibi görünüyor";
+                return View();
+            }
+            else
+            {
+                TempData["Message1"] = "Yaşasııın... Şimdi maklelerim sayfasına tıklayarak yazdığın tüm makaleleri görebilirsin";
+                _db.Add(makale);
+                _db.SaveChanges();
+
+                return View();
+            }
             _db.Add(makale);
             _db.SaveChanges();
 
@@ -123,34 +138,108 @@ namespace Icaz.com.Controllers
         [HttpPost]
         public async Task<IActionResult> MemberUpdate(Member member)
         {
-            
-            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            identityUser.Ad = member.Ad;
-            identityUser.Soyad = member.Soyad;
-            identityUser.Cinsiyet = member.Cinsiyet;
-            identityUser.BirthDate = member.BirthDate;
-            identityUser.UserName = member.UserName;
-            identityUser.Email = member.Email;
-            identityUser.KullaniciURL = member.KullaniciURL;
-            identityUser.PhoneNumber = member.PhoneNumber;
-            IdentityResult result = await _userManager.UpdateAsync(identityUser);
-            if (result.Succeeded)
+            if (member.MemberDetail.IsNullOrEmpty())
             {
-                TempData["Message"] = "Kayıt Başarılı";
+                member.MemberDetail = "Anlatmaya Gerek Yok Görüyorsunuz";
+            }
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+
+            var email = _db.Members.Where(x => x.Email == member.Email).ToList();
+            var user = _db.Members.Where(x => x.UserName == member.UserName).ToList();
+            var userURL = _db.Members.Where(x => x.KullaniciURL == member.KullaniciURL).ToList();
+            if (email.Count > 1 || user.Count > 1 || userURL.Count > 1)
+            {
+                TempData["Message1"] = "Kayıt Başarısız: email, kullanıcı adı veya kullanıcı url daha önce alnımış";
                 return View();
             }
             else
             {
-                TempData["Message1"] = "Kayıt Başarısız";
-                return View();
+                identityUser.Email = member.Email;
+                identityUser.Ad = member.Ad;
+                identityUser.Soyad = member.Soyad;
+                identityUser.Cinsiyet = member.Cinsiyet;
+                identityUser.BirthDate = member.BirthDate;
+                identityUser.Email = member.Email;
+                identityUser.KullaniciURL = member.KullaniciURL;
+                identityUser.UserName = member.UserName;
+                identityUser.PhoneNumber = member.PhoneNumber;
+                identityUser.MemberDetail = member.MemberDetail;
+                IdentityResult result = await _userManager.UpdateAsync(identityUser);
+                if (result.Succeeded)
+                {
+                    TempData["Message"] = "Kayıt Başarılı";
+                    return View();
+                }
+                else
+                {
+                    TempData["Message1"] = "Kayıt Başarısız";
+                    return View();
+                }
             }
-                
+
+
+
+
+
         }
         public async Task<IActionResult> LogOut()
         {
             _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login" , "home");
+            return RedirectToAction("Login", "home");
+        }
+        public async Task<IActionResult> MemberDelete()
+        {
+
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            _db.Remove(identityUser);
+            _db.SaveChanges();
+            _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "home");
+        }
+        [HttpGet]
+        public IActionResult KonuCreate()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> KonuCreate(Konu gelenKonu)
+        {
+
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            gelenKonu.MemberId = identityUser.Id;
+
+            try
+            {
+                _db.Add(gelenKonu);
+                _db.SaveChanges();
+                TempData["Message"] = "Başarı ile eklendi";
+                return View();
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = "UPSS Birşeyelr Yanlış Görünüyor";
+                throw;
+            }
+
+            
+            
+            
+        }
+        public async Task<IActionResult> UserKonu(int id)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            KonuUser konuUser = new KonuUser
+            {
+                KonuId = id,
+                MemberId = identityUser.Id
+            };
+            _db.Add(konuUser);
+            _db.SaveChanges();
+
+            return RedirectToAction("Konular", "home");
         }
 
         private void KonularıListele()

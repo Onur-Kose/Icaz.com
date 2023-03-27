@@ -4,6 +4,7 @@ using Icaz.com.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icaz.com.Migrations
 {
     [DbContext(typeof(IcazContext))]
-    partial class IcazContextModelSnapshot : ModelSnapshot
+    [Migration("20230327122552_v5")]
+    partial class v5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,14 +62,17 @@ namespace Icaz.com.Migrations
                     b.Property<int?>("KonuId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MemberId")
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MemberId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("KonuUserId");
 
                     b.HasIndex("KonuId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("MemberId1");
 
                     b.ToTable("KonuUsers");
                 });
@@ -398,7 +404,7 @@ namespace Icaz.com.Migrations
 
                     b.HasOne("Icaz.com.Models.Member", null)
                         .WithMany("KonuUsers")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("MemberId1");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Makale", b =>

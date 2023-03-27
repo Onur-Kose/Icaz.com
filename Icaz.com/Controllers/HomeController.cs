@@ -32,7 +32,6 @@ namespace Icaz.com.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
             var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).Take(5);
             return View(makaleler);
         }
@@ -41,13 +40,25 @@ namespace Icaz.com.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Makaleler()
+        public async Task<IActionResult> Makaleler()
         {
+            List<Makale> mak = new List<Makale>();
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var konuUser = _db.KonuUsers.Where(x => x.MemberId == identityUser.Id.ToString()).ToList();
+            foreach (var item in konuUser)
+            {
+                var makaleForUser = _db.Makales.Where(x => x.KonuId == item.KonuId).ToList();
+                foreach (var item1 in makaleForUser)
+                {
+                    mak.Add(item1);
+                }
+            }
+            ViewBag.makaleI = mak;
             var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).ToList();
             return View(makaleler);
         }
 
-        
+
         public IActionResult Makaleler2(int id)
         {
             var makaleler = _db.Makales.Where(c => c.KonuId == id).ToList();
@@ -55,14 +66,14 @@ namespace Icaz.com.Controllers
         }
         public IActionResult Makale(int id)
         {
-           
+
             var makale = _db.Makales.Where(x => x.MakaleId == id).FirstOrDefault();
             var User = _db.Members.Where(x => x.Id == makale.MemberId).FirstOrDefault();
-            
+
             makale.KacOkundu = makale.KacOkundu + 1;
             _db.SaveChanges();
 
-            ViewBag.User = User.Ad;
+            ViewBag.User = User.Ad + " " + User.Soyad;
             return View(makale);
         }
 
@@ -84,12 +95,18 @@ namespace Icaz.com.Controllers
         [HttpPost]
         public async Task<IActionResult> SingUp(Member newUser)
         {
-            var varMı = await _userManager.FindByEmailAsync(newUser.Email);
 
-            if (varMı == null)
+            var varMı = await _userManager.FindByEmailAsync(newUser.Email);
+            var varMı1 = await _userManager.FindByEmailAsync(newUser.UserName);
+            var varMı2 = await _userManager.FindByEmailAsync(newUser.KullaniciURL);
+
+            if (varMı == null || varMı1 == null || varMı2 == null)
             {
                 Member identityUser = new Member();
+
                 identityUser.Email = newUser.Email;
+                identityUser.Ad = newUser.Ad;
+                identityUser.Soyad = newUser.Soyad;
                 identityUser.UserName = newUser.UserName;
                 identityUser.Cinsiyet = newUser.Cinsiyet;
                 identityUser.BirthDate = newUser.BirthDate;
@@ -99,22 +116,18 @@ namespace Icaz.com.Controllers
                 IdentityResult result = await _userManager.CreateAsync(identityUser, newUser.PasswordHash);
                 if (result.Succeeded)
                 {
-                    var resultRole = await _userManager.AddToRoleAsync(identityUser, "USER");
-                    if (resultRole.Succeeded)
-                    {
-                        TempData["Message"] = "Kayıt Başarılı";
-                        return RedirectToAction("login", "Home");
-                    }
+                    TempData["Message"] = "Kayıt Başarılı";
+                    return RedirectToAction("login", "Home");
                 }
                 else
                 {
                     TempData["Message"] = "Kayıt başarısız";
                     return View();
                 }
-                
+
             }
 
-            TempData["Message"] = "Zaten Kayıtlı Kullanıcı ";
+            TempData["Message"] = "Bu E mail adresi, kullanıcı adı veya URL ile daha önce kayıt oluşturulmuş değiştirerek yeniden deneyin. Unutmayın bu sizin daha önce kaydolduğunuz anlamına da geliyor olabilir";
             return View();
         }
         [HttpGet]
@@ -126,7 +139,7 @@ namespace Icaz.com.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginUser gelenUser)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = "Giriş Modeli Doğru değil";
@@ -138,7 +151,7 @@ namespace Icaz.com.Controllers
                 TempData["Message"] = "Kullanıcı bulunamadı";
                 return View();
             }
-            var kayitliMi = await _signInManager.PasswordSignInAsync(userVarMi, gelenUser.Password,true,true);
+            var kayitliMi = await _signInManager.PasswordSignInAsync(userVarMi, gelenUser.Password, true, true);
             if (kayitliMi.Succeeded)
             {
                 return RedirectToAction("Index", "User");

@@ -3,7 +3,18 @@
 @{
     ViewData["Title"] = "MakaleCreate";
 }
-
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+}
+else if (TempData["Message1"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message1"]
+    </div>
+}
 
 
 <h4 class="m-4">Makale</h4>
@@ -38,8 +49,8 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary " />
-                <a class="btn btn-dark m-3" asp-controller="User" asp-action="Index">Home Sayfasına Dön</a>
+                <input type="submit" value="Kaydet" class="btn btn-primary " />
+                <a class="btn btn-dark m-3" asp-controller="User" asp-action="Index">←Home Sayfasına Dön</a>
             </div>
         </form>
         

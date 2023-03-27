@@ -1,0 +1,41 @@
+﻿@model Icaz.com.Models.Konu
+
+@{
+    ViewData["Title"] = "KonuCreate";
+}
+
+@{
+    if (TempData["Message"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+}
+
+<h4>Yeni Konu Ekle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form class="m-3" asp-action="KonuCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KonuAdi" class="control-label"></label>
+                <input required asp-for="KonuAdi" class="form-control" />
+                <span asp-validation-for="KonuAdi" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <span>
+                    <a class="btn btn-dark m3" asp-action="Index">←Anasayfaya Dön</a>
+                </span>
+                <input type="submit" value="Create" class="btn btn-primary" />
+
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+
+

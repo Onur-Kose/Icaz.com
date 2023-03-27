@@ -4,45 +4,59 @@
     ViewData["Title"] = "Yazar";
 }
 
-<h1>Yazar Bilgileri</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
 
-<div>
+        <hr />
+        <div class="row">
+            <h2 class="" style="color:dimgrey">
+                @Html.DisplayFor(model => model.Ad)  @Html.DisplayFor(model => model.Soyad)
 
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Soyad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Soyad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cinsiyet)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cinsiyet)
-        </dd>
+            </h2>
+            <span class="col-sm-6 fs-5" style="color:gold">
+                @Html.DisplayFor(model => model.JoinDate) Tarihinden bu yana üye
+            </span>
+            <hr />
+            <h3>Hakkında</h3>
+            <textarea rows="5" readonly>
+                @Html.DisplayFor(model => model.MemberDetail)
+            </textarea>
 
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JoinDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JoinDate)
-        </dd>
-@*        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Kullaniciadi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Kullaniciadi)
-        </dd>*@
-    </dl>
-</div>
-<div>
-    <a class="btn btn-dark m-2" asp-action="Index">Anasayfaya Git</a>
-</div>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-dark m-2" asp-action="Index">←Anasayfaya Git</a> <span>
+
+            <a class="btn btn-dark m-2" asp-controller="User" asp-action="MemberUpdate">Kendi bilgilerini Düzenle→</a>
+            
+        </span>
+    </div>
+}
+else
+{
+    <div>
+
+        <hr />
+        <div class="row">
+            <h2 class="" style="color:dimgrey">
+                @Html.DisplayFor(model => model.Ad)  @Html.DisplayFor(model => model.Soyad)
+
+            </h2>
+            <span class="col-sm-6 fs-5" style="color:gold">
+                @Html.DisplayFor(model => model.JoinDate) Tarihinden bu yana üye
+            </span>
+            <hr />
+            <h3>Hakkında</h3>
+            <textarea rows="2" readonly>
+                @Html.DisplayFor(model => model.MemberDetail)
+            </textarea>
+
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-dark m-2" asp-action="Index">Anasayfaya Git</a>
+    </div>
+}
+
+

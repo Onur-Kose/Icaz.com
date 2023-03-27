@@ -4,6 +4,7 @@ using Icaz.com.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icaz.com.Migrations
 {
     [DbContext(typeof(IcazContext))]
-    partial class IcazContextModelSnapshot : ModelSnapshot
+    [Migration("20230327111422_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,11 +40,16 @@ namespace Icaz.com.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("KonuUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MemberId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("KonuId");
+
+                    b.HasIndex("KonuUserId");
 
                     b.HasIndex("MemberId");
 
@@ -59,14 +67,10 @@ namespace Icaz.com.Migrations
                     b.Property<int?>("KonuId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MemberId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("KonuUserId");
-
-                    b.HasIndex("KonuId");
-
-                    b.HasIndex("MemberId");
 
                     b.ToTable("KonuUsers");
                 });
@@ -364,6 +368,9 @@ namespace Icaz.com.Migrations
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("KonuUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("KullaniciURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -376,11 +383,17 @@ namespace Icaz.com.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("KonuUserId");
+
                     b.HasDiscriminator().HasValue("Member");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Konu", b =>
                 {
+                    b.HasOne("Icaz.com.Models.KonuUser", null)
+                        .WithMany("Konus")
+                        .HasForeignKey("KonuUserId");
+
                     b.HasOne("Icaz.com.Models.Member", "Member")
                         .WithMany("Konular")
                         .HasForeignKey("MemberId")
@@ -388,17 +401,6 @@ namespace Icaz.com.Migrations
                         .IsRequired();
 
                     b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("Icaz.com.Models.KonuUser", b =>
-                {
-                    b.HasOne("Icaz.com.Models.Konu", null)
-                        .WithMany("KonuUsers")
-                        .HasForeignKey("KonuId");
-
-                    b.HasOne("Icaz.com.Models.Member", null)
-                        .WithMany("KonuUsers")
-                        .HasForeignKey("MemberId");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Makale", b =>
@@ -467,17 +469,27 @@ namespace Icaz.com.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Icaz.com.Models.Member", b =>
+                {
+                    b.HasOne("Icaz.com.Models.KonuUser", null)
+                        .WithMany("Members")
+                        .HasForeignKey("KonuUserId");
+                });
+
             modelBuilder.Entity("Icaz.com.Models.Konu", b =>
                 {
-                    b.Navigation("KonuUsers");
-
                     b.Navigation("Makales");
+                });
+
+            modelBuilder.Entity("Icaz.com.Models.KonuUser", b =>
+                {
+                    b.Navigation("Konus");
+
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("Icaz.com.Models.Member", b =>
                 {
-                    b.Navigation("KonuUsers");
-
                     b.Navigation("Konular");
 
                     b.Navigation("Makaleler");

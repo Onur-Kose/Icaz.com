@@ -18,7 +18,7 @@ namespace Icaz.com.Validation
             }
             else
             {
-                return new ValidationResult("Cinsiyet Kadın veya erkek Olmalıdır");
+                return new ValidationResult("Cinsiyet Kadın veya Erkek Olmalıdır");
             }
 
         }

@@ -12,22 +12,62 @@
     <div class="row text-center">
 
         <h1>@Html.DisplayFor(model => model.MakleAdi)</h1>
-        <br class="my-4" />
-        <h6>
+        <hr class="my-4" />
+
+        <h6 class="text-start">
             @Html.DisplayFor(model => model.MakleOzet)
         </h6>
-        <p class="text-start ">
-            @Html.DisplayFor(model => model.MakleMetni)
-        </p>
+        <hr />
+        @if (Model.MakleMetni.Length < 1000)
+        {
+            <div class="text-start" style="color:royalblue">
+                <span >Bu makale için tahmini okuma süresi 8 dk dır.</span>
+            </div>
+           
+            <textarea rows="15" class="text-start ">
+                @Html.DisplayFor(model => model.MakleMetni)
+                </textarea>
+
+
+        }
+        else if (Model.MakleMetni.Length < 5000)
+        {
+            <div class="text-start " style="color:orchid">
+                <span >Bu makale için tahmini okuma süresi 20 dk dır.</span>
+            </div>
+            <textarea rows="25" class="text-start ">
+                @Html.DisplayFor(model => model.MakleMetni)
+                    </textarea>
+        }
+        else if (Model.MakleMetni.Length < 10000)
+        {
+            <div class="text-start" style="color:red">
+                <span>Bu makale için tahmini okuma süresi 30 dk dır.</span>
+            </div>
+            <br />
+            <textarea readonly rows="40" class="text-start ">
+                @Html.DisplayFor(model => model.MakleMetni)
+                </textarea>
+        }
+        else
+        {
+            <div class="text-start" style="color:darkred">
+                <span >Bu makale için tahmini okuma süresi 40 dakidan daha fazladır.</span>
+            </div>
+            <textarea rows="40" class="text-start ">
+                @Html.DisplayFor(model => model.MakleMetni)
+                    </textarea>
+        }
+
         <div class="container ">
             <div class="text-end ">
                 <span>Okunma Sayısı: @Html.DisplayFor(model => model.KacOkundu) </span>
                 @*<span>Puan:  @Html.DisplayFor(model => model.Puan)</span>*@
             </div>
             <hr />
-            <div class="row container  text-end p-0 m-0" >
+            <div class="row container  text-end p-0 m-0">
                 <div class="col-3  ">
-                    <a class="btn btn-dark mb-4 p-3 " asp-action="Index">Back to List</a>
+                    <a class="btn btn-dark mb-4 p-3 " asp-action="Index">← Anasayfaya Dön</a>
                 </div>
                 <div class=" col-9 p-0">
                     <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.Member.Id"> @ViewBag.User </a></span> tarafından   </span>

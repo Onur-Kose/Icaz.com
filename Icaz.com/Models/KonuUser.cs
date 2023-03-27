@@ -3,7 +3,10 @@
     public class KonuUser
     {
         public int KonuUserId { get; set; }
-        public List<Konu> Konus { get; set; }
-        public List<Member> Members { get; set; }
+
+        public int? KonuId { get; set; }
+        public string? MemberId { get; set; }
+
+
     }
 }

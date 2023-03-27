@@ -32,6 +32,8 @@ namespace Icaz.com.Models
 
         public List<Konu> Konular { get; set; }
         public List<Makale> Makaleler { get; set; }
+        public List<KonuUser> KonuUsers { get; set; }
+        
 
 
 

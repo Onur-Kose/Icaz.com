@@ -15,6 +15,7 @@ namespace Icaz.com.Models
         public DbSet<Makale> Makales { get; set; }
         public DbSet<Rol> Rols { get; set; }
         public DbSet<Konu> Konus { get; set; }
+        public DbSet<KonuUser> KonuUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -5,32 +5,71 @@
 }
 @model IEnumerable<Konu>
 
-<!-- Main Content-->
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            @{
-                foreach (var item in Model)
+@if (User.Identity.IsAuthenticated)
+{
+    <!-- Main Content-->
+    <h6 class="alert alert-info text-end m-5">Eğer aradığın listede yoksa yeni konu ekle yazısına tıklayarak yeni konu ekleyebilirsin</h6>
+    <div class="text-end m-5">
+        <a class="" asp-controller="User" asp-action="KonuCreate">Yeni Konu Ekle</a>
+    </div>
+
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @foreach (var item in Model)
                 {
                     <!-- Post preview-->
-                    <div class="post-preview container">
-                        
-                            <h3 class="post-title text-start">@item.KonuAdi</h3>
-                            <h4 class="post-subtitle text-end">@item.CreateTime</h4>
-                        
+
+                    <div class="post-preview container ">
+
+                        <h3 class="post-title text-start">@item.KonuAdi</h3>
+                        <h4 class="post-subtitle text-end">@item.CreateTime.ToShortDateString()</h4>
+
                         <p class="post-meta">
                             konu ile alakalı
                             <a asp-action="Makaleler2" asp-route-id="@item.KonuId">Makaleler</a>
-                            
                         </p>
+                        <div class="form-group text-end ">
+                            <a class="btn btn-primary" asp-controller="User" asp-action="UserKonu" asp-route-id="@item.KonuId">İlgi Alanlarıma Kaydet</a>
+                        </div>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
                 }
-
-            }
-
-
+            </div>
         </div>
     </div>
-</div>
+    <h6 class="alert alert-info text-end m-5">Aradığını bulamadın mı? Hadi yeni konu ekle</h6>
+    <div class="text-end m-5">
+        <a class="" asp-controller="User" asp-action="KonuCreate">Yeni Konu Ekle</a>
+    </div>
+}
+else
+{
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <!-- Post preview-->
+                        <div class="post-preview container">
+
+                            <h3 class="post-title text-start">@item.KonuAdi</h3>
+                            <h4 class="post-subtitle text-end">@item.CreateTime</h4>
+
+                            <p class="post-meta">
+                                konu ile alakalı<a asp-action="Makaleler2" asp-route-id="@item.KonuId">Makaleler</a>
+                            </p>
+                        </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+}
+

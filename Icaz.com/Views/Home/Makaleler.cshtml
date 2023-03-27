@@ -4,32 +4,66 @@
 @{
 }
 @model IEnumerable<Makale>
+@if (User.Identity.IsAuthenticated)
+{
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @{
+                    foreach (Makale item in ViewBag.makaleI)
+                    {
+                        <!-- Post preview-->
+                        <div class="post-preview">
+                            <a method="post" asp-action="Makale" asp-route-id="@item.MakaleId">
+                                <!--TODOO-->
+                                <h2 class="post-title">@item.MakleAdi</h2>
+                                <h3 class="post-subtitle">@item.MakleOzet</h3>
+                            </a>
 
-<!-- Main Content-->
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            @{
-                foreach (Makale item in Model)
-                {
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a method="post" asp-action="Makale"  asp-route-id="@item.MakaleId">
-                            <!--TODOO-->
-                            <h2 class="post-title">@item.MakleAdi</h2>
-                            <h3 class="post-subtitle">@item.MakleOzet</h3>
-                        </a>
+                        </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    }
 
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
+
                 }
 
-
-            }
-
-            <a class="btn btn-dark" asp-action="Index">← Anasayfaya Dön</a>
-            <hr class="my-4" />
+                <a class="btn btn-dark" asp-action="Index">← Anasayfaya Dön</a>
+                <hr class="my-4" />
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @{
+                    foreach (Makale item in Model)
+                    {
+                        <!-- Post preview-->
+                        <div class="post-preview">
+                            <a method="post" asp-action="Makale" asp-route-id="@item.MakaleId">
+                                <!--TODOO-->
+                                <h2 class="post-title">@item.MakleAdi</h2>
+                                <h3 class="post-subtitle">@item.MakleOzet</h3>
+                            </a>
+
+                        </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    }
+
+
+                }
+
+                <a class="btn btn-dark" asp-action="Index">← Anasayfaya Dön</a>
+                <hr class="my-4" />
+            </div>
+        </div>
+    </div>
+}
+
