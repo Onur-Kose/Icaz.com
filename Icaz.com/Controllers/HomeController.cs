@@ -21,12 +21,13 @@ namespace Icaz.com.Controllers
         //{
         //    _logger = logger;
         //}
-        public HomeController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager)
+        public HomeController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager, ILogger<HomeController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -70,7 +71,7 @@ namespace Icaz.com.Controllers
             var makale = _db.Makales.Where(x => x.MakaleId == id).FirstOrDefault();
             var User = _db.Members.Where(x => x.Id == makale.MemberId).FirstOrDefault();
 
-            makale.KacOkundu = makale.KacOkundu + 1;
+            makale.KacOkundu++;
             _db.SaveChanges();
 
             ViewBag.User = User.Ad + " " + User.Soyad;

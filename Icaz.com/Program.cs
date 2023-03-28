@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<IcazContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
 builder.Services.AddIdentity<Member, Rol>().AddEntityFrameworkStores<IcazContext>().AddDefaultTokenProviders();
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,7 +22,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();

@@ -52,7 +52,7 @@ namespace Icaz.com.Controllers
             return View(updateMakale);
         }
         [HttpPost]
-        public async Task<IActionResult> MakaleUpdate(Makale updateMakale)
+        public IActionResult MakaleUpdate(Makale updateMakale)
         {
             KonularıListele();
             var bulunanMakale = _db.Makales.Where(x => x.MakaleId == updateMakale.MakaleId).FirstOrDefault();
@@ -125,10 +125,7 @@ namespace Icaz.com.Controllers
 
                 return View();
             }
-            _db.Add(makale);
-            _db.SaveChanges();
 
-            return View();
         }
         [HttpGet]
         public IActionResult MemberUploadP()
@@ -137,12 +134,13 @@ namespace Icaz.com.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> MemberUploadP(IFormFile file)
+        public async Task<IActionResult> MemberUploadP(MemberUploadP file)
         {
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
             if (file != null)
             {
-                string imageExtension = Path.GetExtension(file.FileName);
+                
+                string imageExtension = Path.GetExtension(file.ImgFile.FileName);
 
                 string imageName = Guid.NewGuid() + imageExtension;
 
@@ -150,8 +148,9 @@ namespace Icaz.com.Controllers
 
                 using var stream = new FileStream(path, FileMode.Create);
 
-                await file.CopyToAsync(stream);
+                await file.ImgFile.CopyToAsync(stream);
                 identityUser.Fotograf = path;
+                IdentityResult result = await _userManager.UpdateAsync(identityUser);
                 TempData["Message1"] = "İşlem Başarı ile gerçekleşti";
                 return RedirectToAction("MemberUpdate" , "User");
 
@@ -163,7 +162,9 @@ namespace Icaz.com.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
                 identityUser.Fotograf = path;
                 TempData["Message"] = "UPSS! Yükleme işlemini tamamlayamadık";
+                IdentityResult result = await _userManager.UpdateAsync(identityUser);
                 return RedirectToAction("MemberUpdate", "User");
+                
             }
             
         }
@@ -247,7 +248,7 @@ namespace Icaz.com.Controllers
             
 
         }
-        public async Task<IActionResult> LogOut()
+        public IActionResult LogOut()
         {
             _signInManager.SignOutAsync();
 

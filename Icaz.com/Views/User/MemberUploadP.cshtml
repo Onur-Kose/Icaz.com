@@ -4,17 +4,23 @@
 *@
 @{
 }
+@model MemberUploadP
+
 <div class="row">
     <div class="col-md-12">
-        <form asp-controller="User" asp-action="MemberUploadP" enctype="multipart/form-data" method="POST">
-            <h2 class="text-center lead"> Resim Yükle</h2>
+
+        <form asp-controller="User" asp-action="MemberUploadP" enctype="multipart/form-data" method="POST" SecurityProtocolType="0">
             <div class="form-group">
-                <label for="exampleFormControlFile1">Resim Bilgileri</label>
-                <input id="exampleFormControlFile1" type="file" name="file" class="form-control" />
+                <label class="control-label" asp-for="ImgFile"></label>
+                <div class="col-md-8">
+                    <input asp-for="ImgFile" enctype="multipart/form-data" class="form-control" type="file" valur="">
+                    <span class="text-danger" asp-validation-for="ImgFile"></span>
+                </div>
             </div>
-            <div class="form-group text-right">
-                <input type="submit" class="btn btn-success btn-sm w-25" value="Resim Yükle" />
+            <div class="form-group mt-3 col-12">
+                <input type="submit" value="Kaydet" class="btn btn-success col-3 " />
             </div>
         </form>
     </div>
+
 </div>
