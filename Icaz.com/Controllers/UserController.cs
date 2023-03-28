@@ -1,4 +1,5 @@
 ﻿using Icaz.com.Models;
+using Icaz.com.Models.View_Halper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -177,10 +178,32 @@ namespace Icaz.com.Controllers
                     return View();
                 }
             }
+        }
+        [HttpGet]
+        public IActionResult PasswordUpdate()
+        {
 
 
+            return View();
 
-
+        }
+        [HttpPost]
+        public async Task<IActionResult> PasswordUpdate(PasswordUpdate newPass)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            IdentityResult result = await _userManager.ChangePasswordAsync(identityUser, newPass.OldPassword, newPass.NewPassword);
+            if (result.Succeeded)
+            {
+                TempData["Message1"] = "Şifre Başarı İle güncellendi";
+                return RedirectToAction("MemberUpdate", "User");
+                
+            }
+            else
+            {
+                TempData["Message1"] = "Eski şifreniz Uyuşmuyor";
+                return View();
+            }
+            
 
         }
         public async Task<IActionResult> LogOut()

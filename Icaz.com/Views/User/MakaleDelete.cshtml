@@ -5,7 +5,6 @@
 }
 
 
-
 <h class="alert alert-danger" role="alert">Bu işlem geri alınamaz !!! Tüm yazdıkların silinecek emin misin? </h>
 <br />
 <br />
@@ -18,7 +17,6 @@
             Makele Özeti
         </dt>
         <dd class="col-sm-10 text-truncate">
-
             @Html.DisplayFor(model => model.MakleOzet)
         </dd>
         <hr />
@@ -26,9 +24,7 @@
             Makale Metni
         </dt>
         <dd class="col-sm-10" >
-            
                @Html.DisplayFor(model => model.MakleMetni); 
-             
         </dd>
         <dt class="col-sm-2">
             Görüntülenme Sayısı
@@ -49,9 +45,7 @@
             @Html.DisplayFor(model => model.EditTime)
         </dd>
     </dl>
-
     <form class="row justify-content-around" asp-action="MakaleDelete">
-        
         <input type="hidden" asp-for="MakaleId" />
         <input type="submit" value="Delete" class="btn btn-danger col-3" /> 
         <a class="btn btn-dark col-3" asp-controller="User" asp-action="PersonMakale">Makalelerime Dön</a>
