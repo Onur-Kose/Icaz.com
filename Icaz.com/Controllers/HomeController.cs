@@ -43,20 +43,30 @@ namespace Icaz.com.Controllers
         [HttpGet]
         public async Task<IActionResult> Makaleler()
         {
-            List<Makale> mak = new List<Makale>();
-            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            var konuUser = _db.KonuUsers.Where(x => x.MemberId == identityUser.Id.ToString()).ToList();
-            foreach (var item in konuUser)
+            if (User.Identity.IsAuthenticated)
             {
-                var makaleForUser = _db.Makales.Where(x => x.KonuId == item.KonuId).ToList();
-                foreach (var item1 in makaleForUser)
+                List<Makale> mak = new List<Makale>();
+                var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var konuUser = _db.KonuUsers.Where(x => x.MemberId == identityUser.Id.ToString()).ToList();
+                foreach (var item in konuUser)
                 {
-                    mak.Add(item1);
+                    var makaleForUser = _db.Makales.Where(x => x.KonuId == item.KonuId).ToList();
+                    foreach (var item1 in makaleForUser)
+                    {
+                        mak.Add(item1);
+                    }
                 }
+                ViewBag.makaleI = mak;
+                var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).ToList();
+                return View(makaleler);
             }
-            ViewBag.makaleI = mak;
-            var makaleler = _db.Makales.OrderBy(x => x.KacOkundu).ToList();
-            return View(makaleler);
+            else
+            {
+                var makaleler = _db.Makales.OrderBy(c => c.KacOkundu).ToList();
+                return View(makaleler);
+            }
+            
+
         }
 
 
@@ -74,8 +84,11 @@ namespace Icaz.com.Controllers
             makale.KacOkundu++;
             _db.SaveChanges();
 
-            ViewBag.User = User.Ad + " " + User.Soyad;
+            ViewBag.User = User;
+            
             return View(makale);
+            //(C:\ProjectWorkSpace\NET6MVC\Icaz.com\Icaz.com\wwwroot / images / defult.png)
+          
         }
 
         public IActionResult Konular()
@@ -101,7 +114,7 @@ namespace Icaz.com.Controllers
             var varMı1 = await _userManager.FindByEmailAsync(newUser.UserName);
             var varMı2 = await _userManager.FindByEmailAsync(newUser.KullaniciURL);
 
-            if (varMı == null || varMı1 == null || varMı2 == null)
+            if (varMı == null && varMı1 == null & varMı2 == null)
             {
                 Member identityUser = new Member();
 
@@ -169,5 +182,6 @@ namespace Icaz.com.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

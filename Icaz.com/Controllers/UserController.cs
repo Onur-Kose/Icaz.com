@@ -137,9 +137,10 @@ namespace Icaz.com.Controllers
         public async Task<IActionResult> MemberUploadP(MemberUploadP file)
         {
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
             if (file != null)
             {
-                
+
                 string imageExtension = Path.GetExtension(file.ImgFile.FileName);
 
                 string imageName = Guid.NewGuid() + imageExtension;
@@ -149,10 +150,11 @@ namespace Icaz.com.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
 
                 await file.ImgFile.CopyToAsync(stream);
+
                 identityUser.Fotograf = path;
-                IdentityResult result = await _userManager.UpdateAsync(identityUser);
+                //IdentityResult result = await _userManager.UpdateAsync(identityUser);
                 TempData["Message1"] = "İşlem Başarı ile gerçekleşti";
-                return RedirectToAction("MemberUpdate" , "User");
+                return RedirectToAction("MemberUpdate", "User");
 
             }
             else
@@ -162,11 +164,11 @@ namespace Icaz.com.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
                 identityUser.Fotograf = path;
                 TempData["Message"] = "UPSS! Yükleme işlemini tamamlayamadık";
-                IdentityResult result = await _userManager.UpdateAsync(identityUser);
+                //IdentityResult result = await _userManager.UpdateAsync(identityUser);
                 return RedirectToAction("MemberUpdate", "User");
-                
+
             }
-            
+
         }
         [HttpGet]
         public async Task<IActionResult> MemberUpdate()
