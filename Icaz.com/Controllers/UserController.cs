@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.Metrics;
 
 namespace Icaz.com.Controllers
 {
@@ -130,6 +131,43 @@ namespace Icaz.com.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult MemberUploadP()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> MemberUploadP(IFormFile file)
+        {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (file != null)
+            {
+                string imageExtension = Path.GetExtension(file.FileName);
+
+                string imageName = Guid.NewGuid() + imageExtension;
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{imageName}");
+
+                using var stream = new FileStream(path, FileMode.Create);
+
+                await file.CopyToAsync(stream);
+                identityUser.Fotograf = path;
+                TempData["Message1"] = "İşlem Başarı ile gerçekleşti";
+                return RedirectToAction("MemberUpdate" , "User");
+
+            }
+            else
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/defult.png");
+
+                using var stream = new FileStream(path, FileMode.Create);
+                identityUser.Fotograf = path;
+                TempData["Message"] = "UPSS! Yükleme işlemini tamamlayamadık";
+                return RedirectToAction("MemberUpdate", "User");
+            }
+            
+        }
+        [HttpGet]
         public async Task<IActionResult> MemberUpdate()
         {
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -139,11 +177,13 @@ namespace Icaz.com.Controllers
         [HttpPost]
         public async Task<IActionResult> MemberUpdate(Member member)
         {
+            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
             if (member.MemberDetail.IsNullOrEmpty())
             {
                 member.MemberDetail = "Anlatmaya Gerek Yok Görüyorsunuz";
             }
-            var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            
 
 
             var email = _db.Members.Where(x => x.Email == member.Email).ToList();
@@ -166,6 +206,7 @@ namespace Icaz.com.Controllers
                 identityUser.UserName = member.UserName;
                 identityUser.PhoneNumber = member.PhoneNumber;
                 identityUser.MemberDetail = member.MemberDetail;
+                identityUser.Fotograf = member.Fotograf;
                 IdentityResult result = await _userManager.UpdateAsync(identityUser);
                 if (result.Succeeded)
                 {
@@ -200,7 +241,7 @@ namespace Icaz.com.Controllers
             }
             else
             {
-                TempData["Message1"] = "Eski şifreniz Uyuşmuyor";
+                TempData["Message1"] = "UPSS! Birşeyler Yanlış Görünüyor";
                 return View();
             }
             
