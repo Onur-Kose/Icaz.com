@@ -1,6 +1,19 @@
 ﻿@model Icaz.com.Models.Member
 @{
     ViewData["Title"] = "MemberUpdate";
+    //Member mem = new Member();
+    //mem = ViewBag.User;
+    //string foto;
+    //if (mem.Fotograf != null)
+    //{
+    //     foto = mem.Fotograf;
+    //}
+    //else
+    //{
+    //     foto = "defult.png";
+    //}
+
+    //string ad = mem.Ad;
 }
 @if (TempData["Message"] != null)
 {
@@ -22,12 +35,14 @@ else if (TempData["Message1"] != null)
 
 <div class="row m-2">
     <div class="col-11">
+        @*<div class="col-5"><img class="w-75" src="/images/@foto" class="rounded mx-auto d-block" alt="@ad progil fotoğrafı"></div>*@
+        <span class=" m-0 col-12">
+            <a class="btn btn-success p-1 mt-3 col-12" asp-action="MemberuploadP">Resim Yükle</a>
+        </span>
         <form asp-action="MemberUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <span class=" m-0 col-12">
-                <a class="btn btn-success p-1 mt-3 col-12" asp-action="MemberuploadP">Resim Yükle</a>
-            </span>
+
             <hr />
             <div class="form-group ">
                 <label asp-for="Ad" class="control-label">Adınız</label>

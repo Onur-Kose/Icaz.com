@@ -1,6 +1,7 @@
 ﻿using Icaz.com.Models;
 using Icaz.com.Models.View_Halper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -16,13 +17,15 @@ namespace Icaz.com.Controllers
         private readonly RoleManager<Rol> _roleManager;
         private readonly SignInManager<Member> _signInManager;
         private readonly IcazContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager)
+        public UserController(IcazContext db, UserManager<Member> userManager, RoleManager<Rol> roleManager, SignInManager<Member> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -130,45 +133,97 @@ namespace Icaz.com.Controllers
         [HttpGet]
         public IActionResult MemberUploadP()
         {
-            
+
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> MemberUploadP(MemberUploadP file)
         {
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
-
             if (file != null)
             {
+                PhotoControl(file.ImgFile);
 
-                string imageExtension = Path.GetExtension(file.ImgFile.FileName);
-
-                string imageName = Guid.NewGuid() + imageExtension;
-
-                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{imageName}");
-
-                using var stream = new FileStream(path, FileMode.Create);
-
-                await file.ImgFile.CopyToAsync(stream);
-
-                identityUser.Fotograf = path;
-                //IdentityResult result = await _userManager.UpdateAsync(identityUser);
-                TempData["Message1"] = "İşlem Başarı ile gerçekleşti";
-                return RedirectToAction("MemberUpdate", "User");
-
+            }
+            if (file.ImgFile != null)
+            {
+                identityUser.Fotograf = AddPhotoArticle(file.ImgFile);
             }
             else
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/defult.png");
-
-                using var stream = new FileStream(path, FileMode.Create);
-                identityUser.Fotograf = path;
-                TempData["Message"] = "UPSS! Yükleme işlemini tamamlayamadık";
-                //IdentityResult result = await _userManager.UpdateAsync(identityUser);
-                return RedirectToAction("MemberUpdate", "User");
-
+                identityUser.Fotograf = "defult.png";
             }
+            _db.SaveChanges();
+            return View();
 
+            // fotoğraf ekleme deneme
+            //if (file != null)
+            //{C:\ProjectWorkSpace\NET6MVC\Icaz.com\Icaz.com\wwwroot\images\defult.png
+
+            //    string imageExtension = Path.GetExtension(file.ImgFile.FileName);
+
+            //    string imageName = Guid.NewGuid() + imageExtension;
+
+            //    string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{imageName}");
+
+            //    using var stream = new FileStream(path, FileMode.Create);
+
+            //    await file.ImgFile.CopyToAsync(stream);
+
+            //    identityUser.Fotograf = path;
+            //    //IdentityResult result = await _userManager.UpdateAsync(identityUser);
+            //    TempData["Message1"] = "İşlem Başarı ile gerçekleşti";
+            //    return RedirectToAction("MemberUpdate", "User");
+
+            //}
+            //else
+            //{
+            //    string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/defult.png");
+
+            //    using var stream = new FileStream(path, FileMode.Create);
+            //    identityUser.Fotograf = path;
+            //    TempData["Message"] = "UPSS! Yükleme işlemini tamamlayamadık";
+            //    //IdentityResult result = await _userManager.UpdateAsync(identityUser);
+            //    return RedirectToAction("MemberUpdate", "User");
+
+            //}
+
+        }
+        private void PhotoControl(IFormFile photo)
+        {
+            string[] photoExtensions = { ".jpg", ".png", ".jpeg" };
+            if (photo != null)
+            {
+                string ext = Path.GetExtension(photo.FileName);
+                if (!photoExtensions.Contains(ext))
+                {
+                    ModelState.AddModelError("photo", "Extension must be .jpg, .jpeg, .png!");
+                }
+                else if (photo.Length > 1000 * 1000 * 1)//Bir MB'a karşılık geliyor.
+                {
+                    ModelState.AddModelError("photo", "Maximum file size 1 MB");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("photo", "Photo is required!");
+            }
+        }
+
+        private string? AddPhotoArticle(IFormFile photo)
+        {
+            if (photo != null)
+            {
+                string ext = Path.GetExtension(photo.FileName);
+                string photoName = Guid.NewGuid() + ext;
+                string photoPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", photoName);
+                using (var stream = new FileStream(photoPath, FileMode.Create))
+                {
+                    photo.CopyTo(stream);
+                }
+                return photoName;
+            }
+            return null;
         }
         [HttpGet]
         public async Task<IActionResult> MemberUpdate()
@@ -181,12 +236,13 @@ namespace Icaz.com.Controllers
         public async Task<IActionResult> MemberUpdate(Member member)
         {
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            ViewBag.User = identityUser;
 
             if (member.MemberDetail.IsNullOrEmpty())
             {
                 member.MemberDetail = "Anlatmaya Gerek Yok Görüyorsunuz";
             }
-            
+
 
 
             var email = _db.Members.Where(x => x.Email == member.Email).ToList();
@@ -240,14 +296,14 @@ namespace Icaz.com.Controllers
             {
                 TempData["Message1"] = "Şifre Başarı İle güncellendi";
                 return RedirectToAction("MemberUpdate", "User");
-                
+
             }
             else
             {
                 TempData["Message1"] = "UPSS! Birşeyler Yanlış Görünüyor";
                 return View();
             }
-            
+
 
         }
         public IActionResult LogOut()
@@ -277,23 +333,34 @@ namespace Icaz.com.Controllers
 
             var identityUser = await _userManager.FindByNameAsync(User.Identity.Name);
             gelenKonu.MemberId = identityUser.Id;
-
-            try
+            var konular = _db.Konus.ToList();
+            bool varMi = false;
+            foreach (var item in konular)
+            {
+                if (item.KonuAdi == gelenKonu.KonuAdi)
+                {
+                    varMi = true;
+                }
+            }
+            if (varMi == false)
             {
                 _db.Add(gelenKonu);
                 _db.SaveChanges();
                 TempData["Message"] = "Başarı ile eklendi";
                 return View();
             }
-            catch (Exception)
+            else
             {
-                TempData["Message"] = "UPSS Birşeyelr Yanlış Görünüyor";
-                throw;
+                TempData["Message1"] = "UPSS Birşeyelr Yanlış Görünüyor. Belkide eklemeye çalıştığın konu zaten vardır.";
+                return View();
             }
 
-            
-            
-            
+
+
+
+
+
+
         }
         public async Task<IActionResult> UserKonu(int id)
         {

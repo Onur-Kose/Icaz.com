@@ -9,10 +9,14 @@
     <div>
 
         <hr />
-        <div class="row">
+        <div class="row ">
             <h2 class="" style="color:dimgrey">
-                @Html.DisplayFor(model => model.Ad)  @Html.DisplayFor(model => model.Soyad)
-
+                
+                <div class="col-12 d-flex justify-content-around">
+                    @Html.DisplayFor(model => model.Ad)  @Html.DisplayFor(model => model.Soyad)
+                    <span class="text-end col-9"><img class="w-25 " src="/images/@Model.Fotograf" class="rounded mx-auto d-block" alt="@Model.Ad profil fotoğrafı"> </span>
+                </div>
+                
             </h2>
             <span class="col-sm-6 fs-5" style="color:gold">
                 @Html.DisplayFor(model => model.JoinDate) Tarihinden bu yana üye

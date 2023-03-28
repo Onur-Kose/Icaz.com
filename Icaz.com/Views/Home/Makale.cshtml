@@ -72,8 +72,8 @@
                     <a class="btn btn-dark mb-4 p-3 " asp-action="Index">← Anasayfaya Dön</a>
                 </div>
                 <div class=" col-9 p-0">
-                    <span><img src="/images/@member.Fotograf" class="rounded mx-auto d-block" alt="..."></span>
-                    <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.Member.Id">@username</a></span> tarafından   </span>
+                    
+                    <span><span class="text-black font-monospace me-0 mt-3 "><a class="text-primary" asp-action="Yazar" asp-route-itemid="@Model.Member.Id"><span class="col-3"><img class="w-25 " src="/images/@member.Fotograf" class="rounded mx-auto d-block" alt="@member.Ad progil fotoğrafı">   - </span>    @username</a></span>  tarafından   </span>
                     <span>Tarihinde yaratıldı: @Html.DisplayFor(model => model.CreateTime)</span>
                     @if (Model.CreateTime < Model.EditTime)
                     {

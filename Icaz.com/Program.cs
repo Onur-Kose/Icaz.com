@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<IcazContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
 builder.Services.AddIdentity<Member, Rol>().AddEntityFrameworkStores<IcazContext>().AddDefaultTokenProviders();
-builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +27,31 @@ app.Use(async (context, next) =>
         context.Request.Path = "/error/PageNotFound";
         await next();
     }
+    else if (context.Response.StatusCode == 502)
+    {
+        context.Request.Path = "/error/PageNotFound";
+        await next();
+    }
+    else if (context.Response.StatusCode == 401)
+    {
+        context.Request.Path = "/error/PageNotFound";
+        await next();
+    }
+    else if (context.Response.StatusCode == 403)
+    {
+        context.Request.Path = "/error/PageNotFound";
+        await next();
+    }
+    else if (context.Response.StatusCode == 405)
+    {
+        context.Request.Path = "/error/PageNotFound";
+        await next();
+    }
+    else if (context.Response.StatusCode == 409)
+    {
+        context.Request.Path = "/error/PageNotFound";
+        await next();
+    }
 });
     
     
@@ -34,7 +59,7 @@ app.UseStatusCodePagesWithReExecute("/ErrorPage/Error", "?code={0}");//buradaki 
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSession();
+
 app.UseRouting();
 
 app.UseAuthentication();
