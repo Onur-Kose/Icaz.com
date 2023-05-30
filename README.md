@@ -20,24 +20,28 @@
  </div>
  <h5 align="center" >Konu Listesi</h5> 
   <div align="center"  width="90%" >
-    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/43d406f0-7ec4-4b1c-be8f-d51425c4538a" alt="Login_Sayfası">
-    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/6f3e5e3e-3e0b-41e6-a798-726ef5e39ca5" alt="Login_Sayfası">
+      <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/6f3e5e3e-3e0b-41e6-a798-726ef5e39ca5" alt="Konu Listesi">
+    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/43d406f0-7ec4-4b1c-be8f-d51425c4538a" alt="Konu Listesi">
     <hr width="50%">
  </div>
   <h5 align="center" >Makale Yazma Düzenleme Sayfaları</h5> 
   <div align="center"  width="90%" >
       <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/65bf043c-5d81-4a78-afec-9de2e22c29c5" alt="Login_Sayfası">
-  <hr width="10%">
+  <hr width="1%">
       <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/3d2f472b-5de5-4ee4-8206-df676786a3f3" alt="Login_Sayfası">
+    <hr width="1%">
     <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/fb3cc48a-18e3-48e4-8fc3-293189c54e6f" alt="Login_Sayfası">
     <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/9ef68aa8-f33f-4e42-b2d5-ade133946c96" alt="Login_Sayfası">
-
+ <hr width="50%">
  </div>
- 
+  <h5 align="center" >Profil Güncelleme ve Şifre Güncelleme sayfaları</h5> 
+  <div align="center"  width="90%" >
+      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/bcfa7886-9b5a-43cb-a5c2-181164aef4d4" alt="Profil Güncelleme">
+    <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/d7f3bb2a-12b2-4644-9fd3-e87219aa1909" alt="Profil Güncelleme">
+      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/c2d6fc48-bf2e-4ccd-8197-c2d7d81e7e7a" alt="Şifre Güncellme">
+ </div>
+     <hr >
 
-![Makale_Düzenleme](https://github.com/Onur-Kose/Icaz.com/assets/103755656/fb3cc48a-18e3-48e4-8fc3-293189c54e6f)
-![Makale_Sil](https://github.com/Onur-Kose/Icaz.com/assets/103755656/9ef68aa8-f33f-4e42-b2d5-ade133946c96)
-![Makale_Yaz_Sayfası](https://github.com/Onur-Kose/Icaz.com/assets/103755656/65bf043c-5d81-4a78-afec-9de2e22c29c5)
-![Makalelerim_Login](https://github.com/Onur-Kose/Icaz.com/assets/103755656/3d2f472b-5de5-4ee4-8206-df676786a3f3)
+
 
 
