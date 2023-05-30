@@ -8,37 +8,37 @@
 <hr>
 <h5 align="center" >Ziyaretçi Anasayfası</h5>
 <div align="center">
-  <img height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/791a417b-3ad6-4b26-8d38-62aa4f5ce727" alt="Giriş_Sayfası">
-    <img height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/1a4d86f3-e3d1-478a-8980-778121bb4b69" alt="Giriş_Sayfası">
+      <img height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9F_Sayfas%C4%B1_NL.PNG" alt="Giriş_Sayfası">
+  <img height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9FSayfas%C4%B1'_NL.PNG" alt="Giriş_Sayfası">
       <hr width="50%">
  </div>
  <h5 align="center" >Kullanıcı Giriş Sayfası - Yazar Anasayfası</h5> 
  <div align="center"  width="90%" >
-    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/3a3e455d-3aa6-4c74-a999-e079e0629abb" alt="Login_Sayfası">
-    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/e7edeae3-b4b8-4b53-b8ab-c78b3b3a1836" alt="Login_Sayfası">
+    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9F_YapNL.PNG" alt="Login_Sayfası">
+    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Anasayfa_Login.PNG" alt="Login_Sayfası">
       <hr width="50%">
  </div>
  <h5 align="center" >Konu Listesi</h5> 
   <div align="center"  width="90%" >
-      <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/6f3e5e3e-3e0b-41e6-a798-726ef5e39ca5" alt="Konu Listesi">
-    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/43d406f0-7ec4-4b1c-be8f-d51425c4538a" alt="Konu Listesi">
+      <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Konular_Login.PNG" alt="Konu Listesi">
+    <img  height="200" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Konular_Login2.PNG" alt="Konu Listesi">
     <hr width="50%">
  </div>
   <h5 align="center" >Makale Yazma Düzenleme Sayfaları</h5> 
   <div align="center"  width="90%" >
-      <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/65bf043c-5d81-4a78-afec-9de2e22c29c5" alt="Login_Sayfası">
+      <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Makale_Yaz_Sayfas%C4%B1.PNG" alt="Makale Yazma">
   <hr width="1%">
-      <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/3d2f472b-5de5-4ee4-8206-df676786a3f3" alt="Login_Sayfası">
+      <img  width="800" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Makalelerim_Login.PNG" alt="Makalelerim Sayfası">
     <hr width="1%">
-    <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/fb3cc48a-18e3-48e4-8fc3-293189c54e6f" alt="Login_Sayfası">
-    <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/9ef68aa8-f33f-4e42-b2d5-ade133946c96" alt="Login_Sayfası">
+    <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Makale_D%C3%BCzenleme.PNG" alt="Makale Düzenle">
+    <img  width="400" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Makale_Sil.PNG" alt="Makale Sil">
  <hr width="50%">
  </div>
   <h5 align="center" >Profil Güncelleme ve Şifre Güncelleme sayfaları</h5> 
   <div align="center"  width="90%" >
-      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/bcfa7886-9b5a-43cb-a5c2-181164aef4d4" alt="Profil Güncelleme">
-    <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/d7f3bb2a-12b2-4644-9fd3-e87219aa1909" alt="Profil Güncelleme">
-      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/assets/103755656/c2d6fc48-bf2e-4ccd-8197-c2d7d81e7e7a" alt="Şifre Güncellme">
+      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Profil_Sayfas%C4%B1.PNG" alt="Profil Güncelleme">
+    <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Profil_Sayfas%C4%B12.PNG" alt="Profil Güncelleme">
+      <img  width="300" src="https://github.com/Onur-Kose/Icaz.com/blob/master/%C5%9Eifre_G%C3%9Cncelle_Sayfas%C4%B1.PNG" alt="Şifre Güncellme">
  </div>
      <hr >
 
