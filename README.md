@@ -8,8 +8,8 @@
 <hr>
 <h5 align="center" >Ziyaretçi Anasayfası</h5>
 <div align="center">
-      <img width="50%" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9F_Sayfas%C4%B1_NL.PNG" alt="Giriş_Sayfası">
-  <img width="50%" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9FSayfas%C4%B1'_NL.PNG" alt="Giriş_Sayfası">
+      <img width="40%" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9F_Sayfas%C4%B1_NL.PNG" alt="Giriş_Sayfası">
+  <img width="40%" src="https://github.com/Onur-Kose/Icaz.com/blob/master/Giri%C5%9FSayfas%C4%B1'_NL.PNG" alt="Giriş_Sayfası">
       <hr width="50%">
  </div>
  <h5 align="center" >Kullanıcı Giriş Sayfası - Yazar Anasayfası</h5> 
