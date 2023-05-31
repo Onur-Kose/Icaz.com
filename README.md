@@ -3,7 +3,8 @@
 
 <p>Bu proje BilgeAdam BOOST programı sürecimde oluşturduğum blog sitesi projemdir. Proje ismini az sözle çok şey anlatmak anlamına gelen İCAZ kelimesinden almaktadır</p>
 
-<p> Proje MVC tasarım deseni kullanılarak oluşturulmuştur. Projede kullanlan veri tabanı MSSQL'dir. Entity Framework Core kullanılarak CodeFirst yaklaşımı ile oluşturulmuştur. Proje de Identity paketi temel alınmıştır. </p>
+<p> Proje MVC tasarım deseni kullanılarak oluşturulmuştur. Front-End'de HTML5, CSS ve Bootstrap teknolojileri kullanıldı.  Projede kullanlan veri tabanı MSSQL'dir. Entity Framework Core kullanılarak CodeFirst yaklaşımı ile oluşturulmuştur. Proje de Identity paketi temel alınmıştır.  </p>
+<p>Brojede iki farklı kullanıcı rolü vardır giriş yapmamış yani ziyareçiler ve girş yapmış olan yazarlar. Yazarlar makale yazma yetkisine sahip olan kullanıcılardır. aynı zamanda makale okuyabilir ilgi alanlarını seçebilir ve daha önce yazdığı makaleleri düzenleyip silebilirler. Ziyareçiler ise makale okuyabilirler</p>
 <h3 style="text-align: center;">İcaz'dan Bazı Görüntüler</h3>
 <hr>
 <h5 align="center" >Ziyaretçi Anasayfası</h5>
@@ -41,7 +42,12 @@
       <img  width="30%" src="https://github.com/Onur-Kose/Icaz.com/blob/master/%C5%9Eifre_G%C3%9Cncelle_Sayfas%C4%B1.PNG" alt="Şifre Güncellme">
  </div>
      <hr >
-
+ <h3 style="text-align: center;">İcaz için planlanan gelecek güncellemler</h3>
+ <ul>
+      <li>Ziyaretçiler için yorum yapma özelliği eklenecek</li>
+      <li>Yazar ve ziyaretçiler için makale arama özelliği eklenecek</li>
+      <li>Yöneticilerin daha kolay aksiyon almaları için yönetici paneli eklenecek</li>
+</ul>
 
 
 
